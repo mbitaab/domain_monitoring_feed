@@ -31,9 +31,10 @@ def website_filtering(url_list):
     crypto_re = re.compile("|".join(crypto_keywords), re.IGNORECASE)
 
     filtered_list = []
-    for url in url_list:
-        if not gamb_re.search(url) and not adult_re.search(url) and not ship_re.search(url) and not crypto_re.search(url):
-            filtered_list.append(url)
+    if url_list:
+        for url in url_list:
+            if not gamb_re.search(url) and not adult_re.search(url) and not ship_re.search(url) and not crypto_re.search(url):
+                filtered_list.append(url)
 
     print(f"nrd urls filtered {len(filtered_list)}")
     return filtered_list
@@ -47,14 +48,14 @@ def get_whois_data():
             'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.47 Safari/537.36'
         }
     )
-    flag, i = False, 0
+    flag, i, domain_list = False, 0, []
     while not flag and i < 5:
         i+= 1
         try:
             response = urllib.request.urlopen(req)
             soup = BeautifulSoup(response.read(), "html.parser")
             #print('______________________________\n\n\n\n\n', soup.select('table')[0])
-            cell = soup.select('table')[0].select('a')[0]
+            cell = soup.select('table')[0].select('a')[1]
             #print(cell)
             dl_link = cell.get('href')
             #dl_link = "https://www.whoisds.com//whois-database/newly-registered-domains/MjAyNC0wMy0wNS56aXA=/nrd"
@@ -73,7 +74,7 @@ def get_whois_data():
             archive = zipfile.ZipFile(outfile, 'r')
             links = archive.open('domain-names.txt')
             
-            domain_list = []
+            
             for l in links.readlines():
                 # write to db
                 domain_list.append(l.decode('utf-8'))
