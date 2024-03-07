@@ -56,8 +56,8 @@ def get_whois_data():
             #print('______________________________\n\n\n\n\n', soup.select('table')[0])
             cell = soup.select('table')[0].select('a')[0]
             #print(cell)
-            #dl_link = cell.get('href')
-            dl_link = "https://www.whoisds.com//whois-database/newly-registered-domains/MjAyNC0wMy0wNS56aXA=/nrd"
+            dl_link = cell.get('href')
+            #dl_link = "https://www.whoisds.com//whois-database/newly-registered-domains/MjAyNC0wMy0wNS56aXA=/nrd"
             print(dl_link)
             d = soup.select('td')[0].text
             filename = 'domains' + re.search(r'-[0-9]+-[0-9]+', d)[0][1:]
