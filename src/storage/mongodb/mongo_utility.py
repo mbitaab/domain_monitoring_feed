@@ -4,12 +4,13 @@ from datetime import datetime
 import os
 from storage.database import Database
 
-def create_domain(_domain_name, _monitor, _crawl_freq):
+def create_domain(_domain_name, _monitor, _next_crawl, _crawl_freq):
     try:
         domain = Domain(
             domain=_domain_name,
             register_date=datetime.now(),
             monitor=_monitor,
+            next_crawl = _next_crawl,
             crawl_freq = _crawl_freq
         )
         domain.save()

@@ -132,7 +132,7 @@ def main():
         unq_nrd = list(set(final_list))
         
         for item in unq_nrd:
-            create_domain(item, _monitor=1, _crawl_freq="eod")
+            create_domain(item, _monitor=1, _next_crawl=0, _crawl_freq="eod")
             
         time.sleep(86400)
 
